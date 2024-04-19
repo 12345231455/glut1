@@ -1,124 +1,162 @@
 #include <iostream>
 #include <algorithm>
 
-class Permutation {
+using namespace std;
+
+class Permutation
+ {
 private:
-    int* data;
-    int size;
+    int* num;
+    int sz;
 
 public:
-    Permutation(int n) : size(n) {
-        data = new int[size];
-        for (int i = 0; i < size; ++i) {
-            data[i] = i;
+    Permutation(int n) : sz(n) 
+    {
+        num = new int[sz];
+        for (int i = 0; i < sz; i++)
+         {
+            num[i] = i;
         }
     }
 
-    Permutation(int n, int* arr) : size(n) {
-        data = new int[size];
-        for (int i = 0; i < size; ++i) {
-            data[i] = arr[i];
+    Permutation(int n, int* arr) : sz(n) 
+    {
+        num = new int[sz];
+        for (int i = 0; i < sz; i++) 
+        {
+            num[i] = arr[i];
         }
     }
 
-    Permutation(unsigned int n) : size(n) {
-        data = new int[size];
-        for (int i = 0; i < size; ++i) {
-            data[i] = i;
+    Permutation(unsigned int n) : sz(n)
+     {
+        num = new int[sz];
+        for (int i = 0; i < sz; i++) 
+        {
+            num[i] = i;
         }
     }
 
-    ~Permutation() {
-        delete[] data;
+    ~Permutation()
+     {
+        delete[] num;
     }
 
-    void print() {
-        for (int i = 0; i < size; ++i) {
-            std::cout << data[i] << " ";
+    void print() 
+    {
+        for (int i = 0; i < sz; i++)
+         {
+            cout << num[i] << " ";
         }
-        std::cout << std::endl;
+        cout << '\n';
     }
 
-    void next_permutation() {
-        std::next_permutation(data, data + size);
+    void next_permutation()
+     {
+        next_permutation(num, num + sz);
     }
 
-    void previous_permutation() {
-        std::prev_permutation(data, data + size);
+    void previous_permutation()
+     {
+        prev_permutation(num, num + sz);
     }
 
-    Permutation compose(const Permutation& other) const {
-        int* result = new int[size];
-        for (int i = 0; i < size; ++i) {
-            result[i] = other.data[data[i]];
+    Permutation compose(const Permutation& other) const 
+    {
+        int* res = new int[sz];
+        for (int i = 0; i < sz; i++) 
+        {
+            res[i] = other.num[num[i]];
         }
-        Permutation composed(size, result);
-        delete[] result;
+        Permutation composed(sz, res);
+        delete[] res;
         return composed;
     }
 
-    bool operator<(const Permutation& other) const {
-        for (int i = 0; i < size; ++i) {
-            if (data[i] < other.data[i]) return true;
-            else if (data[i] > other.data[i]) return false;
+    bool operator<(const Permutation& other) const 
+    {
+        for (int i = 0; i < sz; i++)
+         {
+            if (num[i] < other.num[i]) 
+            {
+            	return true;
+            }
+            else if (num[i] > other.num[i]) 
+            {
+            	return false;
+            }
         }
         return false;
     }
 
-    bool operator==(const Permutation& other) const {
-        for (int i = 0; i < size; ++i) {
-            if (data[i] != other.data[i]) return false;
+    bool operator==(const Permutation& other) const 
+    {
+        for (int i = 0; i < sz; i++)
+         {
+            if (num[i] != other.num[i]) 
+            {
+            	return false;
+            }
         }
         return true;
     }
 
-    bool operator!=(const Permutation& other) const {
+    bool operator!=(const Permutation& other) const 
+    {
         return !(*this == other);
     }
 
-    bool operator>(const Permutation& other) const {
+    bool operator>(const Permutation& other) const 
+    {
         return other < *this;
     }
 
-    bool operator<=(const Permutation& other) const {
+    bool operator<=(const Permutation& other) const 
+    {
         return !(other < *this);
     }
 
-    bool operator>=(const Permutation& other) const {
+    bool operator>=(const Permutation& other) const
+     {
         return !(*this < other);
     }
 
-    Permutation& operator++() {
+    Permutation& operator++()
+     {
         next_permutation();
         return *this;
     }
 
-    Permutation operator++(int) {
-        Permutation temp = *this;
+    Permutation operator++(int) 
+    {
+        Permutation tmp = *this;
         next_permutation();
-        return temp;
+        return tmp;
     }
 
-    Permutation& operator--() {
+    Permutation& operator--()
+     {
         previous_permutation();
         return *this;
     }
 
-    Permutation operator--(int) {
-        Permutation temp = *this;
+    Permutation operator--(int) 
+    {
+        Permutation tmp = *this;
         previous_permutation();
-        return temp;
+        return tmp;
     }
 };
 
-int main() {
+int main()
+ {
     int n;
-    std::cin >> n;
+    cin >> n;
     int* arr;
     arr = new int[n];
     for(int i = 0; i< n; i++)
     {
-    	std::cin >> arr[i];
+            cin >> arr[i];
     }
     Permutation perm(n, arr);
 
@@ -132,8 +170,8 @@ int main() {
     perm++;
     for(int i = 0; i < n; i++)
     {
-    	perm++;
-    	perm.print();
+            perm++;
+            perm.print();
     }
     perm.compose(perm);
     perm.print();
