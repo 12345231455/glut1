@@ -1,5 +1,4 @@
 #include <iostream>
-#include <algorithm>
 
 using namespace std;
 
@@ -37,10 +36,7 @@ public:
         }
     }
 
-    ~Permutation()
-    {
-        delete[] num;
-    }
+    ~Permutation() = default; 
 
     void print()
     {
@@ -117,6 +113,10 @@ public:
 
     bool operator<(const Permutation& other) const
     {
+        if (this->sz != other.sz)
+        {
+        	return false;
+        }
         for (int i = 0; i < sz; i++)
         {
             if (num[i] < other.num[i])
@@ -133,6 +133,10 @@ public:
 
     bool operator==(const Permutation& other) const
     {
+        if (this->sz != other.sz)
+        {
+        	return false;
+        }
         for (int i = 0; i < sz; i++)
         {
             if (num[i] != other.num[i])
@@ -145,21 +149,37 @@ public:
 
     bool operator!=(const Permutation& other) const
     {
+        if (this->sz != other.sz)
+        {
+        	return false;
+        }
         return !(*this == other);
     }
 
     bool operator>(const Permutation& other) const
     {
+        if (this->sz != other.sz)
+        {
+        	return false;
+        }
         return other < *this;
     }
 
     bool operator<=(const Permutation& other) const
     {
+        if (this->sz != other.sz)
+        {
+        	return false;
+        }
         return !(other < *this);
     }
 
     bool operator>=(const Permutation& other) const
     {
+        if (this->sz != other.sz)
+        {
+        	return false;
+        }
         return !(*this < other);
     }    
 
